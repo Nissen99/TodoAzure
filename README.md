@@ -3,11 +3,11 @@ This is a simple todo app made for learning how to work with Azure.
 
 The plan is:
 
-Hosting a Server SQL database.
+  1. Hosting a Server SQL database.
 
-Hosting a business server that interactes with set database.
+  2. Hosting a business server that interactes with set database.
 
-Hosting a website interacting with set business server.
+  3. Hosting a website interacting with set business server.
 
 All done with Azure
 
