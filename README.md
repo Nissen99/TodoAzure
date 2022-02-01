@@ -1,5 +1,6 @@
 # TodoAzure
 This is a simple todo app made for learning how to work with Azure.
+Project follows clean ariteture, Blazor used for UI, WEB API for communication between Client and Server, C# for server with EFC interacting with database.
 
 The plan is:
 
