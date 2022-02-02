@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Models;
+using TodoPersistence.Util;
 
 namespace TodoPersistence;
 
@@ -10,7 +11,7 @@ public class TodoContext : DbContext
     
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer(@"Server=tcp:tododatabase.database.windows.net,1433;Initial Catalog=TodoSQLDatabase;Persist Security Info=False;User ID=tododatabase;Password=Cpd85khv;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+        optionsBuilder.UseSqlServer(ConfidentialStuff.ConnectionString);
 
     }
 
