@@ -6,7 +6,7 @@ namespace TodoNetworkClient;
 
 public class HttpClientBase
 {
-    protected readonly string Uri = "https://localhost:7191/";
+    protected readonly string Uri = "https://webapp-220203145938.azurewebsites.net/";
         
     protected async Task<T> HandleResponseGet<T>(HttpResponseMessage responseMessage)
     { 

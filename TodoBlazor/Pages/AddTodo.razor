@@ -3,19 +3,25 @@
 @using TodoBlazor.Model
 @inject IModalService ModalService
 @inject ITodoModel TodoModel
+@inject NavigationManager NavigationManager
 
 <h3>AddTodo</h3>
+    <br/>
 
 <EditForm Model="newTodo" OnValidSubmit="@addTodo">
     <div class="form-group">Title:<br/> 
         <InputText @bind-Value="newTodo.Title" required/>
     </div>
+    <br/>
     <div class="form-group">Description:<br/>
         <InputText @bind-Value="newTodo.Description" required/>
     </div>
+        <br/>
+
     <div class="form-group">Due Date:<br/>
         <InputDate @bind-Value="_dateTime" required/>
     </div>
+    <br/>
 
 
     <div class="form-group">
@@ -26,7 +32,7 @@
         <br/>
         @if (newTodo.Responsible != null)
         {
-            <p>Username: @newTodo.Responsible.Username</p>
+            <p style="color: springgreen">Username: @newTodo.Responsible.Username</p>
         }
         else
         {
@@ -37,6 +43,7 @@
         }
     </div>
 
+    <br/>
 
     <p class="actions">
         <button class="btn btn-outline-dark" type="submit">Create</button>
@@ -54,8 +61,16 @@
     {
         try
         {
+            if (newTodo.Responsible == null)
+            {
+                //Give error message TODO 
+                return;
+            }
+            
             newTodo.DueDate = _dateTime;
-            await TodoModel.AddTodoAsync(newTodo);
+            await TodoModel.AddTodoAsync(newTodo); 
+            NavigationManager.NavigateTo("/Todos");
+         
         }
         catch (Exception e)
         {

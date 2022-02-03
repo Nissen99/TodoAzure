@@ -18,4 +18,9 @@ public class TodoModel : ITodoModel
         await _todoNetwork.AddTodoAsync(newTodo);
 
     }
+
+    public async Task<IList<Todo>> GetAllTodosAsync()
+    {
+        return await _todoNetwork.GetAllTodosAsync();
+    }
 }

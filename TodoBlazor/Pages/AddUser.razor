@@ -5,16 +5,19 @@
 @inject NavigationManager NavigationManager
 
 <h3>AddUser</h3>
+    <br/>
 
 <EditForm Model="newUser" OnValidSubmit="@addUser">
     <div class="form-group">Username:<br/> 
         <InputText @bind-Value="newUser.Username" required/>
     </div>
-    
+        <br/>
+
         <div class="form-group">Password:<br/> 
             <InputText @bind-Value="newUser.Password" required/>
         </div>
-    
+        <br/>
+
     <p class="actions">
         <button class="btn btn-outline-dark" type="submit">Create</button>
     </p>

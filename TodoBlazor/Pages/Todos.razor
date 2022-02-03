@@ -1,13 +1,71 @@
 ﻿@page "/Todos"
 @using TodoBlazor.Model
+@using Models
 @inject ITodoModel TodoModel
 
 
 <h3>Todos</h3>
+    <br/>
 
+@if (todosToShow == null)
+{
+    <p>
+      <em>No Todos Found...</em>  
+    </p>
+} else if (!todosToShow.Any())
+{
+    <p>
+        <em>No Todos exist. Please add some.</em>
+    </p>
+}
+else
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Responsible</th>
+            <th>Description</th>
+            <th>Due Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var todo in todosToShow)
+        {
+            <tr>
 
+                <td>@todo.Id</td>
+                <td>@todo.Title</td>
+                <td>@todo.Responsible.Username</td>
+                <td>@todo.Description</td>
+                <td>@todo.DueDate</td>
+                
+
+            </tr>
+        }
+        </tbody>
+    </table>
+}
 
 
 @code {
+
+    private IList<Todo> allTodos;
+    private IList<Todo> todosToShow;
     
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            allTodos = await TodoModel.GetAllTodosAsync();
+
+        }
+        catch (Exception e)
+        {
+            allTodos = null;
+        }
+        todosToShow = allTodos;
+    }
+
 }

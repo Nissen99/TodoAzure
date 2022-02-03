@@ -10,8 +10,17 @@ public class TodoRESTClient : HttpClientBase, ITodoNetwork
 
         StringContent todoAsStringContent = FromObjectToStringContent(newTodo);
 
-        HttpResponseMessage responseMessage = await httpClient.PostAsync(Uri + "Todo", todoAsStringContent);
+        HttpResponseMessage responseMessage = await httpClient.PostAsync(Uri + $"Todo/user/{newTodo.Responsible.Id}", todoAsStringContent);
         
         HandleResponseNoReturn(responseMessage);
+    }
+
+    public async Task<IList<Todo>> GetAllTodosAsync()
+    {
+        HttpClient httpClient = new HttpClient();
+        
+        HttpResponseMessage responseMessage = await httpClient.GetAsync(Uri + "Todo");
+
+        return await HandleResponseGet<IList<Todo>>(responseMessage);
     }
 }
