@@ -1,0 +1,44 @@
+﻿@page "/AddUser"
+@using Models
+@using TodoBlazor.Model
+@inject IUserModel UserModel
+@inject NavigationManager NavigationManager
+
+<h3>AddUser</h3>
+
+<EditForm Model="newUser" OnValidSubmit="@addUser">
+    <div class="form-group">Username:<br/> 
+        <InputText @bind-Value="newUser.Username" required/>
+    </div>
+    
+        <div class="form-group">Password:<br/> 
+            <InputText @bind-Value="newUser.Password" required/>
+        </div>
+    
+    <p class="actions">
+        <button class="btn btn-outline-dark" type="submit">Create</button>
+    </p>
+    
+</EditForm>
+
+
+@code {
+
+    private User newUser = new User();
+
+    private async Task addUser()
+    {
+        try
+        {
+            await UserModel.AddUser(newUser);
+            NavigationManager.NavigateTo("/Todos");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+
+}

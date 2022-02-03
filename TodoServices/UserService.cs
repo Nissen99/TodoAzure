@@ -15,7 +15,7 @@ public class UserService : IUserService
 
     public async Task AddUser(User user)
     {
-        _userDao.AddUser(user);
+        await _userDao.AddUser(user);
     }
 
     public async Task<IList<User>> GetAllUsers()

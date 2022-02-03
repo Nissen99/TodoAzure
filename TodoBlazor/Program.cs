@@ -1,12 +1,25 @@
+using Blazored.Modal;
+using TodoBlazor.Model;
 using TodoNetworkClient;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddScoped<ILoginNetwork, LoginRESTClient>();
-
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
+
+
+builder.Services.AddBlazoredModal();
+
+builder.Services.AddScoped<ILoginNetwork, LoginRESTClient>();
+builder.Services.AddScoped<ITodoNetwork, TodoRESTClient>();
+builder.Services.AddScoped<IUserNetwork, UserRESTClient>();
+
+builder.Services.AddScoped<ITodoModel, TodoModel>();
+builder.Services.AddScoped<IUserModel, UserModel>();
+builder.Services.AddScoped<ILoginModel, LoginModel>();
+
+
 
 var app = builder.Build();
 

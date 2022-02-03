@@ -11,7 +11,7 @@ public class LoginDAO : ILoginDAO
     public async Task<User> Login(string username, string password)
     {
         await using TodoContext ctx = new TodoContext();
-        User loggedInUser = await ctx.Users.FirstOrDefaultAsync(user => user.Username.Equals(username) && user.Password.Equals(password));
+        User loggedInUser = await ctx.User.FirstOrDefaultAsync(user => user.Username.Equals(username) && user.Password.Equals(password));
         return loggedInUser;
     }
 }

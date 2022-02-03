@@ -1,0 +1,57 @@
+﻿@using TodoBlazor.Model
+@using Models
+@inject IUserModel UserModel
+
+@if (allUsers == null || allUsers.Count == 0)
+{
+      <p>No users to show</p>   
+} 
+  else
+  {
+      <table class="table">
+          <thead>
+          <tr>
+              <th>Username</th>
+          </tr>
+          </thead>
+          <tbody>
+          @foreach (User user in allUsers)
+          {
+              <tr>
+                  <td>@user.Username</td>
+                  <td>
+                      <button class="btn btn-secondary" @onclick="() => chooseUser(user)">Add User</button>
+                  </td>
+              </tr>
+                  
+          }
+          </tbody>
+      </table>
+  }
+
+<button @onclick="Cancel" class="btn btn-secondary">Cancel</button>
+
+
+@code {
+    
+    [CascadingParameter] public BlazoredModalInstance BlazoredModal { get; set; }
+
+    private IList<User> allUsers;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        allUsers = await UserModel.GetAllUsersAsync();
+        StateHasChanged();
+    }
+
+    private async Task chooseUser(User user)
+    {
+        await BlazoredModal.CloseAsync(ModalResult.Ok(user));
+
+    }
+
+    private async Task Cancel()
+    {
+        await BlazoredModal.CancelAsync();
+    }
+}

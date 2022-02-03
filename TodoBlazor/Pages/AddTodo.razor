@@ -1,0 +1,86 @@
+﻿@page "/AddTodo"
+@using Models
+@using TodoBlazor.Model
+@inject IModalService ModalService
+@inject ITodoModel TodoModel
+
+<h3>AddTodo</h3>
+
+<EditForm Model="newTodo" OnValidSubmit="@addTodo">
+    <div class="form-group">Title:<br/> 
+        <InputText @bind-Value="newTodo.Title" required/>
+    </div>
+    <div class="form-group">Description:<br/>
+        <InputText @bind-Value="newTodo.Description" required/>
+    </div>
+    <div class="form-group">Due Date:<br/>
+        <InputDate @bind-Value="_dateTime" required/>
+    </div>
+
+
+    <div class="form-group">
+        Responsible User
+        <button class="btn" @onclick="addResponsibleUser">
+            <i class="oi oi-plus"/>
+        </button>
+        <br/>
+        @if (newTodo.Responsible != null)
+        {
+            <p>Username: @newTodo.Responsible.Username</p>
+        }
+        else
+        {
+            <p>
+                No Responsible User Yet
+            </p>
+
+        }
+    </div>
+
+
+    <p class="actions">
+        <button class="btn btn-outline-dark" type="submit">Create</button>
+    </p>
+
+</EditForm>
+
+
+@code {
+
+    private Todo newTodo = new Todo();
+    private DateTime _dateTime = DateTime.Now;
+
+    private async Task addTodo()
+    {
+        try
+        {
+            newTodo.DueDate = _dateTime;
+            await TodoModel.AddTodoAsync(newTodo);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+        
+    }
+
+    private async Task addResponsibleUser()
+    {
+        try
+        {
+            var form = ModalService.Show<AddUserForTodo>("Add Responsible User");
+            var result = await form.Result;
+
+            if (!result.Cancelled)
+            {
+                newTodo.Responsible = (User) result.Data;
+                StateHasChanged();
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+     
+    }
+}
